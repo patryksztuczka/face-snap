@@ -5,4 +5,5 @@ export interface IInputProps {
   placeholder: string;
   value: string;
   onChange: (text: string) => void;
+  error?: string;
 }
