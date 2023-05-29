@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native';
+import { View, Text, ActivityIndicator } from 'react-native';
 import React from 'react';
 import { useFonts } from 'expo-font';
 
@@ -6,7 +6,7 @@ import { IButtonProps } from './Button.types';
 import { styles } from './Button.styles';
 import IconBox from '../IconBox/IconBox';
 
-const Button = ({ text, onPress, secondary, icon, disabled }: IButtonProps) => {
+const Button = ({ text, onPress, secondary, icon, disabled, isLoading }: IButtonProps) => {
   const [fontsLoaded] = useFonts({
     'DM Sans 500': require('../../assets/fonts/DMSans-Medium.ttf'),
   });
@@ -38,7 +38,7 @@ const Button = ({ text, onPress, secondary, icon, disabled }: IButtonProps) => {
           { fontFamily: 'DM Sans 500' },
         ]}
       >
-        {text}
+        {isLoading ? <ActivityIndicator size="small" color="#fff" /> : text}
       </Text>
     </View>
   );

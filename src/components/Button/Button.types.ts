@@ -4,4 +4,5 @@ export interface IButtonProps {
   icon?: () => JSX.Element;
   secondary?: boolean;
   disabled?: boolean;
+  isLoading?: boolean;
 }

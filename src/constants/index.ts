@@ -1,5 +1,5 @@
 export const navigationRoutes = {
-  home: '/',
+  home: '/home',
   welcome: '/welcome',
   login: '/login',
   signup: '/signup',

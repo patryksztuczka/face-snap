@@ -1,11 +1,7 @@
-import { View, Text } from 'react-native';
+import LoginScreen from '../../src/screens/LoginScreen/LoginScreen';
 
 const LoginPage = () => {
-  return (
-    <View>
-      <Text>login</Text>
-    </View>
-  );
+  return <LoginScreen />;
 };
 
 export default LoginPage;
