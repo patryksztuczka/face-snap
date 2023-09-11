@@ -3,6 +3,7 @@ export const navigationRoutes = {
   welcome: '/welcome',
   login: '/login',
   signup: '/signup',
+  camera: '/camera',
 };
 
 export const emailRegex =

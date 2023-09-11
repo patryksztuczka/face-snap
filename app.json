@@ -25,6 +25,14 @@
     "web": {
       "bundler": "metro",
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermissions": "Allow to use your camera"
+        }
+      ]
+    ]
   }
 }
