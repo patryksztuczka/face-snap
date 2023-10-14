@@ -1,10 +1,10 @@
-import { createContext, useContext, useEffect, useState } from 'react';
 import { Session } from '@supabase/supabase-js';
 import { useRouter, useSegments } from 'expo-router';
+import { createContext, useContext, useEffect, useState } from 'react';
 
 import { IAuthContext, IAuthProvider } from './AuthContext.types';
-import { supabase } from '../../supabaseClient';
 import { navigationRoutes } from '../../constants';
+import { supabase } from '../../supabaseClient';
 
 const AuthContext = createContext<IAuthContext | undefined>(undefined);
 

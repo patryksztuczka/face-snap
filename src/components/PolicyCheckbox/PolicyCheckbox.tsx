@@ -1,6 +1,6 @@
+import { useFonts } from 'expo-font';
 import { useState } from 'react';
 import { View, Text } from 'react-native';
-import { useFonts } from 'expo-font';
 
 import { styles } from './PolicyCheckbox.styles';
 import CheckedCheckboxIcon from '../../assets/icons/CheckedCheckboxIcon';

@@ -1,9 +1,9 @@
-import { View, Text, ActivityIndicator } from 'react-native';
-import React from 'react';
 import { useFonts } from 'expo-font';
+import React from 'react';
+import { View, Text, ActivityIndicator } from 'react-native';
 
-import { IButtonProps } from './Button.types';
 import { styles } from './Button.styles';
+import { IButtonProps } from './Button.types';
 import IconBox from '../IconBox/IconBox';
 
 const Button = ({ text, onPress, secondary, icon, disabled, isLoading }: IButtonProps) => {

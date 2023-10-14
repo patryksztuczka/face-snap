@@ -1,6 +1,6 @@
-import { Text, View, Image, SafeAreaView, ImageBackground } from 'react-native';
-import { useRouter } from 'expo-router';
 import { useFonts } from 'expo-font';
+import { useRouter } from 'expo-router';
+import { Text, View, Image, SafeAreaView, ImageBackground } from 'react-native';
 
 import { styles } from './WelcomeScreen.styles';
 import Button from '../../components/Button/Button';
