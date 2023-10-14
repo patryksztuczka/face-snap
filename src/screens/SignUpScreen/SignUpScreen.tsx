@@ -3,7 +3,8 @@ import { useFonts } from 'expo-font';
 import { Link, useRouter } from 'expo-router';
 import { useState, useEffect } from 'react';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
-import { Text, View, SafeAreaView } from 'react-native';
+import { Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { styles } from './SignUpScreen.styles';
 import GoogleIcon from '../../assets/icons/GoogleIcon';
@@ -98,97 +99,98 @@ const SignUpScreen = () => {
 
   return (
     <View style={styles.signUpScreenWrapper}>
-      <SafeAreaView style={styles.androidSafeArea}></SafeAreaView>
-      <Link href="/">
-        <IconBox>
-          <LeftArrowIcon />
-        </IconBox>
-      </Link>
-      <Text style={{ ...styles.title, fontFamily: 'DM Sans 500' }}>Rejestracja</Text>
-      <Text style={{ ...styles.paragraph, fontFamily: 'DM Sans 400' }}>
-        Utwórz konto i zacznij korzystać z aplikacji.
-      </Text>
-      <View style={styles.inputsWrapper}>
-        <Controller
-          control={control}
-          name="email"
-          rules={{
-            required: {
-              value: true,
-              message: 'Pole wymagane',
-            },
-            pattern: {
-              value: emailRegex,
-              message: 'Podany adres e-mail jest niepoprawny.',
-            },
-          }}
-          render={({ field: { onChange, value } }) => (
-            <Input
-              type="text"
-              placeholder="Wpisz swój adres e-mail..."
-              value={value}
-              onChange={onChange}
-              error={errors.email?.message}
-            />
-          )}
+      <SafeAreaView>
+        <Link href="/">
+          <IconBox>
+            <LeftArrowIcon />
+          </IconBox>
+        </Link>
+        <Text style={{ ...styles.title, fontFamily: 'DM Sans 500' }}>Rejestracja</Text>
+        <Text style={{ ...styles.paragraph, fontFamily: 'DM Sans 400' }}>
+          Utwórz konto i zacznij korzystać z aplikacji.
+        </Text>
+        <View style={styles.inputsWrapper}>
+          <Controller
+            control={control}
+            name="email"
+            rules={{
+              required: {
+                value: true,
+                message: 'Pole wymagane',
+              },
+              pattern: {
+                value: emailRegex,
+                message: 'Podany adres e-mail jest niepoprawny.',
+              },
+            }}
+            render={({ field: { onChange, value } }) => (
+              <Input
+                type="text"
+                placeholder="Wpisz swój adres e-mail..."
+                value={value}
+                onChange={onChange}
+                error={errors.email?.message}
+              />
+            )}
+          />
+          <Controller
+            control={control}
+            name="password"
+            rules={{
+              required: {
+                value: true,
+                message: 'Pole wymagane',
+              },
+            }}
+            render={({ field: { onChange, value } }) => (
+              <Input
+                type="password"
+                placeholder="Wpisz hasło..."
+                value={value}
+                onChange={onChange}
+                error={errors.password?.message}
+              />
+            )}
+          />
+          <Controller
+            control={control}
+            name="confirmPassword"
+            rules={{
+              required: {
+                value: true,
+                message: 'Pole wymagane',
+              },
+            }}
+            render={({ field: { onChange, value } }) => (
+              <Input
+                type="password"
+                placeholder="Powtórz hasło..."
+                value={value}
+                onChange={onChange}
+                error={errors.confirmPassword?.message}
+              />
+            )}
+          />
+          {isPasswordDifferent && <ErrorMessage error="Podane hasła różnią się od siebie." />}
+        </View>
+        <Text style={{ ...styles.policyText, fontFamily: 'DM Sans 400' }}>
+          Przechodząc dalej akceptujesz <Text style={styles.link}>regulamin</Text> i{' '}
+          <Text style={styles.link}>politykę prywatności</Text>.
+        </Text>
+        <Button
+          text="Dalej"
+          onPress={handleSubmit(onSubmit)}
+          disabled={isSubmitButtonDisabled}
+          isLoading={isLoading}
         />
-        <Controller
-          control={control}
-          name="password"
-          rules={{
-            required: {
-              value: true,
-              message: 'Pole wymagane',
-            },
-          }}
-          render={({ field: { onChange, value } }) => (
-            <Input
-              type="password"
-              placeholder="Wpisz hasło..."
-              value={value}
-              onChange={onChange}
-              error={errors.password?.message}
-            />
-          )}
+        <Text style={{ ...styles.or, fontFamily: 'DM Sans 400' }}>lub</Text>
+        <Button
+          text="Kontynuuj z Google"
+          onPress={handleSignInWithGoogle}
+          icon={GoogleIcon}
+          secondary
         />
-        <Controller
-          control={control}
-          name="confirmPassword"
-          rules={{
-            required: {
-              value: true,
-              message: 'Pole wymagane',
-            },
-          }}
-          render={({ field: { onChange, value } }) => (
-            <Input
-              type="password"
-              placeholder="Powtórz hasło..."
-              value={value}
-              onChange={onChange}
-              error={errors.confirmPassword?.message}
-            />
-          )}
-        />
-        {isPasswordDifferent && <ErrorMessage error="Podane hasła różnią się od siebie." />}
-      </View>
-      <Text style={{ ...styles.policyText, fontFamily: 'DM Sans 400' }}>
-        Przechodząc dalej akceptujesz <Text style={styles.link}>regulamin</Text> i{' '}
-        <Text style={styles.link}>politykę prywatności</Text>.
-      </Text>
-      <Button
-        text="Dalej"
-        onPress={handleSubmit(onSubmit)}
-        disabled={isSubmitButtonDisabled}
-        isLoading={isLoading}
-      />
-      <Text style={{ ...styles.or, fontFamily: 'DM Sans 400' }}>lub</Text>
-      <Button
-        text="Kontynuuj z Google"
-        onPress={handleSignInWithGoogle}
-        icon={GoogleIcon}
-        secondary
-      />
+      </SafeAreaView>
     </View>
   );
 };

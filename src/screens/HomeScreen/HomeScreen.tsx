@@ -28,7 +28,7 @@ const HomeScreen = () => {
     <View>
       <Text>HomeScreen</Text>
       <Text>Hello, {session?.session?.user.email}</Text>
-      <Button title="Go to camera" onPress={goToCamera} />
+      {/* <Button title="Go to camera" onPress={goToCamera} /> */}
       <Button title="Log out" onPress={handleLogout} />
     </View>
   );

@@ -3,7 +3,8 @@ import { useFonts } from 'expo-font';
 import { Link } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { View, Text, SafeAreaView } from 'react-native';
+import { View, Text } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { styles } from './LoginScreen.styles';
 import GoogleIcon from '../../assets/icons/GoogleIcon';
@@ -80,7 +81,7 @@ const LoginScreen = () => {
 
   return (
     <View style={styles.loginScreenWrapper}>
-      <SafeAreaView style={styles.androidSafeArea}>
+      <SafeAreaView>
         <Link href="/">
           <IconBox>
             <LeftArrowIcon />
