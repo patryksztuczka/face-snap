@@ -1,5 +1,3 @@
-import { NativeSyntheticEvent, TextInputChangeEventData } from 'react-native';
-
 export interface IInputProps {
   type: 'text' | 'password';
   placeholder: string;

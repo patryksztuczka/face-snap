@@ -1,20 +1,20 @@
-import { useState, useEffect } from 'react';
-import { Text, View, SafeAreaView } from 'react-native';
+import { makeRedirectUri, startAsync } from 'expo-auth-session';
 import { useFonts } from 'expo-font';
 import { Link, useRouter } from 'expo-router';
+import { useState, useEffect } from 'react';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
-import { makeRedirectUri, startAsync } from 'expo-auth-session';
+import { Text, View, SafeAreaView } from 'react-native';
 
-import { signUpScreenStyles } from './SignUpScreen.styles';
-import { ISignUpFormValues } from '../../types/FormsTypes';
-import { supabase, supabaseUrl } from '../../supabaseClient';
-import { emailRegex } from '../../constants';
-import IconBox from '../../components/IconBox/IconBox';
-import LeftArrowIcon from '../../assets/icons/LeftArrowIcon';
-import Input from '../../components/Input/Input';
-import Button from '../../components/Button/Button';
+import { styles } from './SignUpScreen.styles';
 import GoogleIcon from '../../assets/icons/GoogleIcon';
+import LeftArrowIcon from '../../assets/icons/LeftArrowIcon';
+import Button from '../../components/Button/Button';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
+import IconBox from '../../components/IconBox/IconBox';
+import Input from '../../components/Input/Input';
+import { emailRegex } from '../../constants';
+import { supabase, supabaseUrl } from '../../supabaseClient';
+import { ISignUpFormValues } from '../../types/FormsTypes';
 
 const SignUpScreen = () => {
   const [fontsLoaded] = useFonts({
@@ -45,11 +45,10 @@ const SignUpScreen = () => {
     try {
       if (password !== confirmPassword) return;
       setIsLoading(true);
-      const { data, error } = await auth.signUp({
+      await auth.signUp({
         email,
         password,
       });
-      if (error) throw error;
       router.push('login');
     } catch (error) {
       console.log(error);
@@ -98,100 +97,99 @@ const SignUpScreen = () => {
   }
 
   return (
-    <SafeAreaView>
-      <View style={signUpScreenStyles.signUpScreenWrapper}>
-        <Link href="/">
-          <IconBox>
-            <LeftArrowIcon />
-          </IconBox>
-        </Link>
-        <Text style={{ ...signUpScreenStyles.title, fontFamily: 'DM Sans 500' }}>Rejestracja</Text>
-        <Text style={{ ...signUpScreenStyles.paragraph, fontFamily: 'DM Sans 400' }}>
-          Utwórz konto i zacznij korzystać z aplikacji.
-        </Text>
-        <View style={signUpScreenStyles.inputsWrapper}>
-          <Controller
-            control={control}
-            name="email"
-            rules={{
-              required: {
-                value: true,
-                message: 'Pole wymagane',
-              },
-              pattern: {
-                value: emailRegex,
-                message: 'Podany adres e-mail jest niepoprawny.',
-              },
-            }}
-            render={({ field: { onChange, value } }) => (
-              <Input
-                type="text"
-                placeholder="Wpisz swój adres e-mail..."
-                value={value}
-                onChange={onChange}
-                error={errors.email?.message}
-              />
-            )}
-          />
-          <Controller
-            control={control}
-            name="password"
-            rules={{
-              required: {
-                value: true,
-                message: 'Pole wymagane',
-              },
-            }}
-            render={({ field: { onChange, value } }) => (
-              <Input
-                type="password"
-                placeholder="Wpisz hasło..."
-                value={value}
-                onChange={onChange}
-                error={errors.password?.message}
-              />
-            )}
-          />
-          <Controller
-            control={control}
-            name="confirmPassword"
-            rules={{
-              required: {
-                value: true,
-                message: 'Pole wymagane',
-              },
-            }}
-            render={({ field: { onChange, value } }) => (
-              <Input
-                type="password"
-                placeholder="Powtórz hasło..."
-                value={value}
-                onChange={onChange}
-                error={errors.confirmPassword?.message}
-              />
-            )}
-          />
-          {isPasswordDifferent && <ErrorMessage error="Podane hasła różnią się od siebie." />}
-        </View>
-        <Text style={{ ...signUpScreenStyles.policyText, fontFamily: 'DM Sans 400' }}>
-          Przechodząc dalej akceptujesz <Text style={signUpScreenStyles.link}>regulamin</Text> i{' '}
-          <Text style={signUpScreenStyles.link}>politykę prywatności</Text>.
-        </Text>
-        <Button
-          text="Dalej"
-          onPress={handleSubmit(onSubmit)}
-          disabled={isSubmitButtonDisabled}
-          isLoading={isLoading}
+    <View style={styles.signUpScreenWrapper}>
+      <SafeAreaView style={styles.androidSafeArea}></SafeAreaView>
+      <Link href="/">
+        <IconBox>
+          <LeftArrowIcon />
+        </IconBox>
+      </Link>
+      <Text style={{ ...styles.title, fontFamily: 'DM Sans 500' }}>Rejestracja</Text>
+      <Text style={{ ...styles.paragraph, fontFamily: 'DM Sans 400' }}>
+        Utwórz konto i zacznij korzystać z aplikacji.
+      </Text>
+      <View style={styles.inputsWrapper}>
+        <Controller
+          control={control}
+          name="email"
+          rules={{
+            required: {
+              value: true,
+              message: 'Pole wymagane',
+            },
+            pattern: {
+              value: emailRegex,
+              message: 'Podany adres e-mail jest niepoprawny.',
+            },
+          }}
+          render={({ field: { onChange, value } }) => (
+            <Input
+              type="text"
+              placeholder="Wpisz swój adres e-mail..."
+              value={value}
+              onChange={onChange}
+              error={errors.email?.message}
+            />
+          )}
         />
-        <Text style={{ ...signUpScreenStyles.or, fontFamily: 'DM Sans 400' }}>lub</Text>
-        <Button
-          text="Kontynuuj z Google"
-          onPress={handleSignInWithGoogle}
-          icon={GoogleIcon}
-          secondary
+        <Controller
+          control={control}
+          name="password"
+          rules={{
+            required: {
+              value: true,
+              message: 'Pole wymagane',
+            },
+          }}
+          render={({ field: { onChange, value } }) => (
+            <Input
+              type="password"
+              placeholder="Wpisz hasło..."
+              value={value}
+              onChange={onChange}
+              error={errors.password?.message}
+            />
+          )}
         />
+        <Controller
+          control={control}
+          name="confirmPassword"
+          rules={{
+            required: {
+              value: true,
+              message: 'Pole wymagane',
+            },
+          }}
+          render={({ field: { onChange, value } }) => (
+            <Input
+              type="password"
+              placeholder="Powtórz hasło..."
+              value={value}
+              onChange={onChange}
+              error={errors.confirmPassword?.message}
+            />
+          )}
+        />
+        {isPasswordDifferent && <ErrorMessage error="Podane hasła różnią się od siebie." />}
       </View>
-    </SafeAreaView>
+      <Text style={{ ...styles.policyText, fontFamily: 'DM Sans 400' }}>
+        Przechodząc dalej akceptujesz <Text style={styles.link}>regulamin</Text> i{' '}
+        <Text style={styles.link}>politykę prywatności</Text>.
+      </Text>
+      <Button
+        text="Dalej"
+        onPress={handleSubmit(onSubmit)}
+        disabled={isSubmitButtonDisabled}
+        isLoading={isLoading}
+      />
+      <Text style={{ ...styles.or, fontFamily: 'DM Sans 400' }}>lub</Text>
+      <Button
+        text="Kontynuuj z Google"
+        onPress={handleSignInWithGoogle}
+        icon={GoogleIcon}
+        secondary
+      />
+    </View>
   );
 };
 

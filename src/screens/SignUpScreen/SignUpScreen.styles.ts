@@ -1,12 +1,17 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StatusBar, StyleSheet } from 'react-native';
 
-export const signUpScreenStyles = StyleSheet.create({
+export const styles = StyleSheet.create({
   signUpScreenWrapper: {
     width: '100%',
     paddingTop: 12,
     paddingLeft: 24,
     paddingRight: 24,
     paddingBottom: 24,
+  },
+
+  androidSafeArea: {
+    flex: 1,
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
   },
 
   title: {

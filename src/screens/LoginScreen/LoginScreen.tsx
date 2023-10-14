@@ -1,19 +1,19 @@
-import { useEffect, useState } from 'react';
-import { View, Text, SafeAreaView } from 'react-native';
-import { Link } from 'expo-router';
+import { makeRedirectUri, startAsync } from 'expo-auth-session';
 import { useFonts } from 'expo-font';
+import { Link } from 'expo-router';
+import { useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
+import { View, Text, SafeAreaView } from 'react-native';
 
 import { styles } from './LoginScreen.styles';
-import IconBox from '../../components/IconBox/IconBox';
-import LeftArrowIcon from '../../assets/icons/LeftArrowIcon';
-import { ILoginFormValues } from '../../types/FormsTypes';
-import { emailRegex } from '../../constants';
-import Input from '../../components/Input/Input';
-import Button from '../../components/Button/Button';
 import GoogleIcon from '../../assets/icons/GoogleIcon';
-import { makeRedirectUri, startAsync } from 'expo-auth-session';
+import LeftArrowIcon from '../../assets/icons/LeftArrowIcon';
+import Button from '../../components/Button/Button';
+import IconBox from '../../components/IconBox/IconBox';
+import Input from '../../components/Input/Input';
+import { emailRegex } from '../../constants';
 import { supabase, supabaseUrl } from '../../supabaseClient';
+import { ILoginFormValues } from '../../types/FormsTypes';
 
 const LoginScreen = () => {
   const [fontsLoaded] = useFonts({
@@ -21,8 +21,9 @@ const LoginScreen = () => {
     'DM Sans 500': require('../../assets/fonts/DMSans-Medium.ttf'),
   });
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [isSubmitButtonDisabled, setIsSubmitButtonDisabled] = useState(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const [isSubmitButtonDisabled, setIsSubmitButtonDisabled] = useState<boolean>(true);
 
   const {
     control,
@@ -78,8 +79,8 @@ const LoginScreen = () => {
   }
 
   return (
-    <SafeAreaView>
-      <View style={styles.loginScreenWrapper}>
+    <View style={styles.loginScreenWrapper}>
+      <SafeAreaView style={styles.androidSafeArea}>
         <Link href="/">
           <IconBox>
             <LeftArrowIcon />
@@ -146,8 +147,8 @@ const LoginScreen = () => {
           icon={GoogleIcon}
           secondary
         />
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </View>
   );
 };
 

@@ -1,10 +1,10 @@
+import { useRouter } from 'expo-router';
 import React from 'react';
 import { View, Text, Button } from 'react-native';
-import { useRouter } from 'expo-router';
 
-import { supabase } from '../../supabaseClient';
-import { useAuth } from '../../context/AuthContext/AuthContext';
 import { navigationRoutes } from '../../constants';
+import { useAuth } from '../../context/AuthContext/AuthContext';
+import { supabase } from '../../supabaseClient';
 
 const HomeScreen = () => {
   const { auth } = supabase;

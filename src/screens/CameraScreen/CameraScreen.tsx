@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { View, Button, Touchable, TouchableOpacity, Text } from 'react-native';
 import { Camera, CameraType, FaceDetectionResult } from 'expo-camera';
+import { useState } from 'react';
+import { View, Button, TouchableOpacity, Text } from 'react-native';
 
 import { styles } from './CameraScreen.styles';
 
