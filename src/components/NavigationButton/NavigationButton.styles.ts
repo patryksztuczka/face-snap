@@ -13,6 +13,5 @@ export const styles = StyleSheet.create({
   navigationButtonLabelActive: {
     fontSize: 12,
     color: '#000',
-    fontWeight: '700',
   },
 });

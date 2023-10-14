@@ -6,6 +6,7 @@ import HomeFilledIcon from '../assets/icons/HomeFilledIcon';
 import HomeIcon from '../assets/icons/HomeIcon';
 import SettingsIcon from '../assets/icons/SettingIcon';
 import SettingsFilledIcon from '../assets/icons/SettingsFilledIcon';
+import { IDocument } from '../components/DocumentCard/DocumentCard.types';
 import { INavigationOption } from '../components/NavigationButton/NavigationButton.types';
 
 export const navigationRoutes = {
@@ -45,6 +46,12 @@ export const navigationBarOptions: INavigationOption[] = [
     activeIcon: SettingsFilledIcon,
   },
 ];
+
+export const polishId: IDocument = {
+  id: 1,
+  title: 'Dowód osobisty',
+  subtitle: 'Wykonaj zdjęcie do polskiego dowodu osobistego.',
+};
 
 export const emailRegex =
   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

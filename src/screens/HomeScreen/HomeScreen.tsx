@@ -2,7 +2,11 @@ import { useRouter } from 'expo-router';
 import React from 'react';
 import { View, Text, Button } from 'react-native';
 
-import { navigationRoutes } from '../../constants';
+import { styles } from './HomeScreen.styles';
+import DocumentCard from '../../components/DocumentCard/DocumentCard';
+import PrimaryHeader from '../../components/PrimaryHeader/PrimaryHeader';
+import PrimaryParagraph from '../../components/PrimaryParagraph/PrimaryParagraph';
+import { navigationRoutes, polishId } from '../../constants';
 import { useAuth } from '../../context/AuthContext/AuthContext';
 import { supabase } from '../../supabaseClient';
 
@@ -11,8 +15,6 @@ const HomeScreen = () => {
 
   const session = useAuth();
 
-  const router = useRouter();
-
   const handleLogout = async () => {
     const { error } = await auth.signOut();
     if (error) {
@@ -20,16 +22,17 @@ const HomeScreen = () => {
     }
   };
 
-  const goToCamera = () => {
-    router.push(navigationRoutes.camera);
-  };
-
   return (
     <View>
-      <Text>HomeScreen</Text>
-      <Text>Hello, {session?.session?.user.email}</Text>
-      {/* <Button title="Go to camera" onPress={goToCamera} /> */}
-      <Button title="Log out" onPress={handleLogout} />
+      <View style={styles.headerSection}>
+        <PrimaryHeader text="Dokumenty" />
+        <PrimaryParagraph text="Wybierz dokument, do którego chcesz wykonać zdjęcie." />
+      </View>
+      <View style={styles.documentCardsContainer}>
+        <DocumentCard key={polishId.id} document={polishId} />
+      </View>
+      {/* <Text>Hello, {session?.session?.user.email}</Text> */}
+      {/* <Button title="Log out" onPress={handleLogout} /> */}
     </View>
   );
 };

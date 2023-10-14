@@ -13,6 +13,8 @@ import Button from '../../components/Button/Button';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import IconBox from '../../components/IconBox/IconBox';
 import Input from '../../components/Input/Input';
+import PrimaryHeader from '../../components/PrimaryHeader/PrimaryHeader';
+import PrimaryParagraph from '../../components/PrimaryParagraph/PrimaryParagraph';
 import { emailRegex } from '../../constants';
 import { supabase, supabaseUrl } from '../../supabaseClient';
 import { ISignUpFormValues } from '../../types/FormsTypes';
@@ -20,7 +22,6 @@ import { ISignUpFormValues } from '../../types/FormsTypes';
 const SignUpScreen = () => {
   const [fontsLoaded] = useFonts({
     'DM Sans 400': require('../../assets/fonts/DMSans-Regular.ttf'),
-    'DM Sans 500': require('../../assets/fonts/DMSans-Medium.ttf'),
   });
 
   const router = useRouter();
@@ -105,10 +106,8 @@ const SignUpScreen = () => {
             <LeftArrowIcon />
           </IconBox>
         </Link>
-        <Text style={{ ...styles.title, fontFamily: 'DM Sans 500' }}>Rejestracja</Text>
-        <Text style={{ ...styles.paragraph, fontFamily: 'DM Sans 400' }}>
-          Utwórz konto i zacznij korzystać z aplikacji.
-        </Text>
+        <PrimaryHeader text="Rejestracja" />
+        <PrimaryParagraph text="Utwórz konto i zacznij korzystać z aplikacji." />
         <View style={styles.inputsWrapper}>
           <Controller
             control={control}

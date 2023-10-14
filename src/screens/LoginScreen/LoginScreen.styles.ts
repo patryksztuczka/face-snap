@@ -10,17 +10,6 @@ export const styles = StyleSheet.create({
     paddingBottom: 24,
   },
 
-  title: {
-    marginTop: 32,
-    marginBottom: 8,
-    fontSize: 40,
-  },
-
-  paragraph: {
-    fontSize: 16,
-    marginBottom: 32,
-  },
-
   inputsWrapper: {
     width: '100%',
     gap: 12,
