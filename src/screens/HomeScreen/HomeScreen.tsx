@@ -1,5 +1,5 @@
 import { useRouter } from 'expo-router';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, Button } from 'react-native';
 
 import { styles } from './HomeScreen.styles';
@@ -8,10 +8,14 @@ import PrimaryHeader from '../../components/PrimaryHeader/PrimaryHeader';
 import PrimaryParagraph from '../../components/PrimaryParagraph/PrimaryParagraph';
 import { navigationRoutes, polishId } from '../../constants';
 import { useAuth } from '../../context/AuthContext/AuthContext';
+import { useAppDispatch } from '../../hooks/useRedux';
+import { getHelloWorldThunk } from '../../redux/thunks/imageThunk';
 import { supabase } from '../../supabaseClient';
 
 const HomeScreen = () => {
   const { auth } = supabase;
+
+  const dispatch = useAppDispatch();
 
   const session = useAuth();
 
@@ -21,6 +25,10 @@ const HomeScreen = () => {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    dispatch(getHelloWorldThunk());
+  }, [dispatch]);
 
   return (
     <View>
