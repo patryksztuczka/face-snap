@@ -1,5 +1,6 @@
 export interface IDocumentCardProps {
   document: IDocument;
+  pickImage: () => void;
 }
 
 export interface IDocument {

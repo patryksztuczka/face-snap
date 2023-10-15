@@ -1,1 +1,1 @@
-export type TStatus = 'pending' | 'success' | 'rejected' | null;
+export type TStatus = 'pending' | 'fulfilled' | 'rejected' | null;

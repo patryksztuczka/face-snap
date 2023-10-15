@@ -8,6 +8,7 @@ import SettingsIcon from '../assets/icons/SettingIcon';
 import SettingsFilledIcon from '../assets/icons/SettingsFilledIcon';
 import { IDocument } from '../components/DocumentCard/DocumentCard.types';
 import { INavigationOption } from '../components/NavigationButton/NavigationButton.types';
+import { IReduxStatus } from '../types/IReduxStatus';
 
 export const navigationRoutes = {
   home: '/home',
@@ -51,6 +52,12 @@ export const polishId: IDocument = {
   id: 1,
   title: 'Dowód osobisty',
   subtitle: 'Wykonaj zdjęcie do polskiego dowodu osobistego.',
+};
+
+export const reduxStatus: IReduxStatus = {
+  pending: 'pending',
+  fulfilled: 'fulfilled',
+  rejected: 'rejected',
 };
 
 export const emailRegex =
