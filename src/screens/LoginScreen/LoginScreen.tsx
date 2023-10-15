@@ -3,7 +3,8 @@ import { useFonts } from 'expo-font';
 import { Link } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { View, Text, SafeAreaView } from 'react-native';
+import { View, Text } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { styles } from './LoginScreen.styles';
 import GoogleIcon from '../../assets/icons/GoogleIcon';
@@ -11,6 +12,8 @@ import LeftArrowIcon from '../../assets/icons/LeftArrowIcon';
 import Button from '../../components/Button/Button';
 import IconBox from '../../components/IconBox/IconBox';
 import Input from '../../components/Input/Input';
+import PrimaryHeader from '../../components/PrimaryHeader/PrimaryHeader';
+import PrimaryParagraph from '../../components/PrimaryParagraph/PrimaryParagraph';
 import { emailRegex } from '../../constants';
 import { supabase, supabaseUrl } from '../../supabaseClient';
 import { ILoginFormValues } from '../../types/FormsTypes';
@@ -18,7 +21,6 @@ import { ILoginFormValues } from '../../types/FormsTypes';
 const LoginScreen = () => {
   const [fontsLoaded] = useFonts({
     'DM Sans 400': require('../../assets/fonts/DMSans-Regular.ttf'),
-    'DM Sans 500': require('../../assets/fonts/DMSans-Medium.ttf'),
   });
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -80,16 +82,14 @@ const LoginScreen = () => {
 
   return (
     <View style={styles.loginScreenWrapper}>
-      <SafeAreaView style={styles.androidSafeArea}>
+      <SafeAreaView>
         <Link href="/">
           <IconBox>
             <LeftArrowIcon />
           </IconBox>
         </Link>
-        <Text style={{ ...styles.title, fontFamily: 'DM Sans 500' }}>Witaj ponownie!</Text>
-        <Text style={{ ...styles.paragraph, fontFamily: 'DM Sans 400' }}>
-          Zaloguj się by przejśc do aplikacji.
-        </Text>
+        <PrimaryHeader text="Witaj ponownie!" />
+        <PrimaryParagraph text="Zaloguj się by przejść do aplikacji" />
         <View style={styles.inputsWrapper}>
           <Controller
             control={control}
