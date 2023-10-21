@@ -1,18 +1,34 @@
 import { useFonts } from 'expo-font';
-import React, { FC } from 'react';
-import { View, Text, ImageBackground, Image } from 'react-native';
+import React, { FC, useState } from 'react';
+import { View, Text, ImageBackground, Image, Pressable } from 'react-native';
 
 import { styles } from './DocumentCard.styles';
 import { IDocumentCardProps } from './DocumentCard.types';
 
-const DocumentCard: FC<IDocumentCardProps> = ({ document, pickImage }) => {
+const DocumentCard: FC<IDocumentCardProps> = ({ document, pickImage, goToCamera }) => {
   const [fontsLoaded] = useFonts({
     'DM Sans 700': require('../../assets/fonts/DMSans-Bold.ttf'),
     'DM Sans 500': require('../../assets/fonts/DMSans-Medium.ttf'),
     'DM Sans 400': require('../../assets/fonts/DMSans-Regular.ttf'),
   });
 
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
+
   const { title, subtitle } = document;
+
+  const togglePopup = () => {
+    setIsPopupVisible(!isPopupVisible);
+  };
+
+  const handleMakePhoto = () => {
+    goToCamera();
+    togglePopup();
+  };
+
+  const handlePickImage = () => {
+    pickImage();
+    togglePopup();
+  };
 
   if (!fontsLoaded) return null;
 
@@ -52,8 +68,32 @@ const DocumentCard: FC<IDocumentCardProps> = ({ document, pickImage }) => {
             />
           </View>
         </View>
-        <View style={styles.makePhotoButton} onTouchEnd={pickImage}>
-          <Text style={{ ...styles.buttonText, fontFamily: 'DM Sans 500' }}>Zrób zdjęcie</Text>
+        <View style={styles.buttonWrapper}>
+          <View style={styles.makePhotoButton} onTouchEnd={togglePopup}>
+            <Text style={{ ...styles.buttonText, fontFamily: 'DM Sans 500' }}>Wybierz</Text>
+          </View>
+          {isPopupVisible ? (
+            <View style={styles.popupWrapper}>
+              <Pressable onTouchEnd={handleMakePhoto}>
+                <Text
+                  style={{
+                    ...styles.popupOption,
+                    fontFamily: 'DM Sans 500',
+                  }}>
+                  Zrób zdjęcie
+                </Text>
+              </Pressable>
+              <Pressable onTouchEnd={handlePickImage}>
+                <Text
+                  style={{
+                    ...styles.popupOption,
+                    fontFamily: 'DM Sans 500',
+                  }}>
+                  Wybierz z galerii
+                </Text>
+              </Pressable>
+            </View>
+          ) : null}
         </View>
       </ImageBackground>
     </View>

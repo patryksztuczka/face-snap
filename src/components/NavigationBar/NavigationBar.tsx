@@ -3,13 +3,13 @@ import React from 'react';
 import { View } from 'react-native';
 
 import { styles } from './NavigationBar.styles';
-import { navigationBarOptions } from '../../constants';
+import { navigationBarOptions, navigationRoutes } from '../../constants';
 import NavigationButton from '../NavigationButton/NavigationButton';
 
 const NavigationBar = () => {
   const pathname = usePathname();
 
-  return (
+  return pathname !== navigationRoutes.camera ? (
     <View style={styles.navigationBarWrapper}>
       {navigationBarOptions.map((option) => (
         <NavigationButton
@@ -19,7 +19,7 @@ const NavigationBar = () => {
         />
       ))}
     </View>
-  );
+  ) : null;
 };
 
 export default NavigationBar;
