@@ -1,5 +1,1 @@
-export const fetchImageFromUri = async (uri: string) => {
-  const response = await fetch(uri);
-  const blob = await response.blob();
-  return blob;
-};
+export const base64ToDataUri = (base64: string) => `data:image/jpeg;base64,${base64}`;

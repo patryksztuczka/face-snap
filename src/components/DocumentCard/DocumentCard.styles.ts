@@ -60,6 +60,10 @@ export const styles = StyleSheet.create({
     shadowRadius: 10,
   },
 
+  buttonWrapper: {
+    position: 'relative',
+  },
+
   makePhotoButton: {
     height: 52,
     borderRadius: 9999,
@@ -74,5 +78,21 @@ export const styles = StyleSheet.create({
   buttonText: {
     fontSize: 16,
     lineHeight: 20,
+  },
+
+  popupWrapper: {
+    position: 'absolute',
+    top: -84,
+    right: 0,
+    gap: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    justifyContent: 'space-between',
+  },
+
+  popupOption: {
+    fontSize: 16,
   },
 });

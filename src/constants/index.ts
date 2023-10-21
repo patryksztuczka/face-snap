@@ -16,6 +16,7 @@ export const navigationRoutes = {
   login: '/login',
   signup: '/signup',
   camera: '/camera',
+  summary: '/summary',
   history: '/history',
   tutorial: '/tutorial',
   settings: '/settings',

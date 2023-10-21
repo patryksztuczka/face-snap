@@ -5,6 +5,7 @@ import { IImageSliceState } from '../../types/Image';
 import { processImageThunk } from '../thunks/imageThunk';
 
 const initialState: IImageSliceState = {
+  processedImageBase64: null,
   processImageStatus: null,
   getHelloWorldStatus: null,
 };
@@ -17,10 +18,12 @@ const imageSlice = createSlice({
     builder.addCase(processImageThunk.pending, (state) => {
       state.processImageStatus = reduxStatus.pending;
     });
-    builder.addCase('image/proccessImage/fulfilled', (state) => {
+    builder.addCase(processImageThunk.fulfilled, (state, { payload }) => {
       state.processImageStatus = reduxStatus.fulfilled;
+      if (!payload) return;
+      state.processedImageBase64 = payload;
     });
-    builder.addCase('image/proccessImage/rejected', (state) => {
+    builder.addCase(processImageThunk.rejected, (state) => {
       state.processImageStatus = reduxStatus.rejected;
     });
   },
