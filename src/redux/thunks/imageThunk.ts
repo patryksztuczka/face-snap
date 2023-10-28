@@ -1,4 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { decode } from 'base64-arraybuffer';
+import 'react-native-get-random-values';
+import { v4 as uuidv4 } from 'uuid';
 
 import { supabase } from '../../supabaseClient';
 import {
@@ -45,15 +48,25 @@ export const savePictureThunk = createAsyncThunk(
   'image/savePicture',
   async ({ userId, imageBase64, callback }: ISavePictureThunk) => {
     try {
+      const fileName = `${uuidv4()}.jpg`;
+
       const { data, error } = await supabase
         .from('pictures')
         .insert({
-          base64_image: imageBase64,
+          image: fileName,
           user_id: userId,
         })
         .select();
 
       if (error) throw new Error(error.message);
+
+      const { data: storageData, error: storageError } = await supabase.storage
+        .from('images')
+        .upload(fileName, decode(imageBase64), {
+          contentType: 'image/jpeg',
+        });
+
+      if (storageError) throw new Error(storageError.message);
 
       if (callback) callback();
 
