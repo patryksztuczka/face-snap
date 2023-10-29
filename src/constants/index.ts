@@ -53,6 +53,11 @@ export const polishId: IDocument = {
   id: 1,
   title: 'Dowód osobisty',
   subtitle: 'Wykonaj zdjęcie do polskiego dowodu osobistego.',
+  // in milimeters
+  requiredWidth: 35,
+  requiredHeight: 45,
+  // in megabytes
+  maxFileSize: 2.5,
 };
 
 export const reduxStatus: IReduxStatus = {

@@ -4,6 +4,8 @@ import { View, Text, ImageBackground, Image, Pressable } from 'react-native';
 
 import { styles } from './DocumentCard.styles';
 import { IDocumentCardProps } from './DocumentCard.types';
+import { useAppDispatch } from '../../hooks/useRedux';
+import { setDocument } from '../../redux/features/imageSlice';
 
 const DocumentCard: FC<IDocumentCardProps> = ({ document, pickImage, goToCamera }) => {
   const [fontsLoaded] = useFonts({
@@ -11,6 +13,8 @@ const DocumentCard: FC<IDocumentCardProps> = ({ document, pickImage, goToCamera 
     'DM Sans 500': require('../../assets/fonts/DMSans-Medium.ttf'),
     'DM Sans 400': require('../../assets/fonts/DMSans-Regular.ttf'),
   });
+
+  const dispatch = useAppDispatch();
 
   const [isPopupVisible, setIsPopupVisible] = useState(false);
 
@@ -21,11 +25,13 @@ const DocumentCard: FC<IDocumentCardProps> = ({ document, pickImage, goToCamera 
   };
 
   const handleMakePhoto = () => {
+    dispatch(setDocument(document));
     goToCamera();
     togglePopup();
   };
 
   const handlePickImage = () => {
+    dispatch(setDocument(document));
     pickImage();
     togglePopup();
   };

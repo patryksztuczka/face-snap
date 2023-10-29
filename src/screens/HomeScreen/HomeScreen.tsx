@@ -51,9 +51,9 @@ const HomeScreen = () => {
   //   }
   // };
 
-  useEffect(() => {
-    dispatch(getHelloWorldThunk());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getHelloWorldThunk());
+  // }, [dispatch]);
 
   return (
     <View>

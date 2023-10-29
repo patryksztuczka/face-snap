@@ -1,12 +1,9 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+
+import TutorialScreen from '../../src/screens/TutorialScreen/TutorialScreen';
 
 const TutorialPage = () => {
-  return (
-    <View>
-      <Text>tutorial</Text>
-    </View>
-  );
+  return <TutorialScreen />;
 };
 
 export default TutorialPage;
