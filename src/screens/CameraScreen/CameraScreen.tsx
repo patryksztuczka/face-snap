@@ -1,4 +1,5 @@
 import { Camera, CameraCapturedPicture, CameraType, FaceDetectionResult } from 'expo-camera';
+import { FaceDetectorClassifications, FaceDetectorMode, FaceFeature } from 'expo-face-detector';
 import { useRouter } from 'expo-router';
 import { useRef, useState } from 'react';
 import { View, Button, TouchableOpacity, Text, Image } from 'react-native';
@@ -53,7 +54,7 @@ const CameraScreen = () => {
   };
 
   const handleFacesDetected = ({ faces }: FaceDetectionResult) => {
-    const face = faces[0] as any;
+    const face = faces[0] as FaceFeature;
     if (!face) return;
     console.log('=====================');
     console.log('left eye open probability', face.leftEyeOpenProbability);
@@ -98,8 +99,12 @@ const CameraScreen = () => {
         ref={cameraRef}
         type={type}
         style={styles.camera}
-        // onFacesDetected={handleFacesDetected}
-      >
+        faceDetectorSettings={{
+          mode: FaceDetectorMode.accurate,
+          runClassifications: FaceDetectorClassifications.all,
+          minDetectionInterval: 1000,
+        }}
+        onFacesDetected={handleFacesDetected}>
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
             <Text style={styles.text}>Flip</Text>

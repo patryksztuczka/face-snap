@@ -5,10 +5,14 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { supabase } from '../../supabaseClient';
 import {
+  IListSavedImagesPayload,
+  IListSavedImagesThunk,
   IProcessImageThunk,
   IProcessImageThunkResponse,
   ISavePictureThunk,
+  ISavedImage,
 } from '../../types/Image';
+import { Database } from '../../types/supabase';
 
 export const getHelloWorldThunk = createAsyncThunk('image/getHelloWorldThunk', async () => {
   try {
@@ -71,6 +75,42 @@ export const savePictureThunk = createAsyncThunk(
       if (callback) callback();
 
       return data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+);
+
+export const listSavedImagesThunk = createAsyncThunk(
+  'image/listSavedImages',
+  async ({ userId }: IListSavedImagesThunk) => {
+    try {
+      const { data, error } = await supabase.from('pictures').select('*').eq('user_id', userId);
+
+      if (error) throw new Error(error.message);
+
+      const pictures = data as Database['public']['Tables']['pictures']['Row'][];
+
+      const images = await Promise.all(
+        pictures.map(async (picture) => {
+          const { data: storageData, error: storageError } = await supabase.storage
+            .from('images')
+            .download(picture.image);
+
+          if (storageError) throw new Error(storageError.message);
+
+          if (storageData) {
+            return {
+              id: picture.id,
+              userId: picture.user_id,
+              image: storageData,
+              createdAt: picture.created_at,
+            } as ISavedImage;
+          }
+        }),
+      );
+
+      return { savedImages: images } as IListSavedImagesPayload;
     } catch (error) {
       console.log(error);
     }

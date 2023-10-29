@@ -1,12 +1,7 @@
-import React from 'react';
-import { Text, View } from 'react-native';
+import HistroyScreen from '../../src/screens/HistoryScreen/HistroyScreen';
 
 const HistoryPage = () => {
-  return (
-    <View>
-      <Text>history</Text>
-    </View>
-  );
+  return <HistroyScreen />;
 };
 
 export default HistoryPage;
