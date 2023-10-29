@@ -1,12 +1,9 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+
+import SettingsScreen from '../../src/screens/SettingsScreen/SettingsScreen';
 
 const SettingsPage = () => {
-  return (
-    <View>
-      <Text>settings</Text>
-    </View>
-  );
+  return <SettingsScreen />;
 };
 
 export default SettingsPage;

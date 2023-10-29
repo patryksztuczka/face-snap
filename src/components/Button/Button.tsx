@@ -29,15 +29,13 @@ const Button = ({ text, onPress, secondary, icon, disabled, isLoading }: IButton
           ? styles.buttonWrapperDisabled
           : styles.buttonWrapperPrimary
       }
-      onTouchEnd={handleOnPress}
-    >
+      onTouchEnd={handleOnPress}>
       {icon && <IconBox>{icon()}</IconBox>}
       <Text
         style={[
           secondary ? styles.textSecondary : disabled ? styles.textDisabled : styles.textPrimary,
           { fontFamily: 'DM Sans 500' },
-        ]}
-      >
+        ]}>
         {isLoading ? <ActivityIndicator size="small" color="#fff" /> : text}
       </Text>
     </View>

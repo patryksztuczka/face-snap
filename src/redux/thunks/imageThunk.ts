@@ -50,15 +50,18 @@ export const processImageThunk = createAsyncThunk(
 
 export const savePictureThunk = createAsyncThunk(
   'image/savePicture',
-  async ({ userId, imageBase64, callback }: ISavePictureThunk) => {
+  async ({ userId, imageBase64, requiredHeight, requiredWidth, callback }: ISavePictureThunk) => {
     try {
+      console.log('callback', callback);
       const fileName = `${uuidv4()}.jpg`;
 
       const { data, error } = await supabase
-        .from('pictures')
+        .from('images')
         .insert({
-          image: fileName,
+          image_name: fileName,
           user_id: userId,
+          required_height: requiredHeight,
+          required_width: requiredWidth,
         })
         .select();
 
@@ -76,6 +79,7 @@ export const savePictureThunk = createAsyncThunk(
 
       return data;
     } catch (error) {
+      console.log('ERROR');
       console.log(error);
     }
   },
@@ -85,28 +89,27 @@ export const listSavedImagesThunk = createAsyncThunk(
   'image/listSavedImages',
   async ({ userId }: IListSavedImagesThunk) => {
     try {
-      const { data, error } = await supabase.from('pictures').select('*').eq('user_id', userId);
+      const { data, error } = await supabase.from('images').select('*').eq('user_id', userId);
 
       if (error) throw new Error(error.message);
 
-      const pictures = data as Database['public']['Tables']['pictures']['Row'][];
+      const pictures = data as Database['public']['Tables']['images']['Row'][];
 
       const images = await Promise.all(
         pictures.map(async (picture) => {
-          const { data: storageData, error: storageError } = await supabase.storage
+          const { data: storageData } = await supabase.storage
             .from('images')
-            .download(picture.image);
+            .getPublicUrl(picture.image_name);
 
-          if (storageError) throw new Error(storageError.message);
-
-          if (storageData) {
-            return {
-              id: picture.id,
-              userId: picture.user_id,
-              image: storageData,
-              createdAt: picture.created_at,
-            } as ISavedImage;
-          }
+          return {
+            id: picture.id,
+            userId: picture.user_id,
+            imageName: picture.image_name,
+            imageUrl: storageData.publicUrl,
+            requiredHeight: picture.required_height,
+            requiredWidth: picture.required_width,
+            createdAt: picture.created_at,
+          } as ISavedImage;
         }),
       );
 

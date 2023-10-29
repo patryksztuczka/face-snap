@@ -1,6 +1,6 @@
 import { isEmpty } from 'lodash';
 import React, { useEffect } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ActivityIndicator } from 'react-native';
 
 import { styles } from './HistoryScreen.styles';
 import { useAuth } from '../../../src/context/AuthContext/AuthContext';
@@ -9,6 +9,7 @@ import { listSavedImagesThunk } from '../../../src/redux/thunks/imageThunk';
 import HistoryItem from '../../components/HistoryItem/HistoryItem';
 import PrimaryHeader from '../../components/PrimaryHeader/PrimaryHeader';
 import PrimaryParagraph from '../../components/PrimaryParagraph/PrimaryParagraph';
+import { reduxStatus } from '../../constants';
 
 const HistroyScreen = () => {
   const dispatch = useAppDispatch();
@@ -26,20 +27,31 @@ const HistroyScreen = () => {
   }, []);
 
   return (
-    <View>
+    <View style={styles.historyScreenWrapper}>
       <View style={styles.headerSection}>
         <PrimaryHeader text="Historia" />
         <PrimaryParagraph text="Przeglądaj swoje zapisane fotografie." />
       </View>
-      <View>
-        {!isEmpty(savedImages) && savedImages != null ? (
-          savedImages?.map((savedImage) => (
-            <HistoryItem key={savedImage.id} savedImage={savedImage} />
-          ))
-        ) : (
-          <Text>Brak zapisanych zdjęć</Text>
-        )}
+      {listSavedImagesStatus === reduxStatus.pending ? (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#aaa" />
+          <PrimaryParagraph text="Ładowanie" />
+        </View>
+      ) : null}
+      <View style={styles.historyList}>
+        {!isEmpty(savedImages) &&
+        savedImages != null &&
+        listSavedImagesStatus !== reduxStatus.pending
+          ? savedImages?.map((savedImage) => (
+              <HistoryItem key={savedImage.id} savedImage={savedImage} />
+            ))
+          : null}
       </View>
+      {isEmpty(savedImages) && listSavedImagesStatus !== reduxStatus.pending ? (
+        <View style={styles.emptyStateContainer}>
+          <PrimaryParagraph text="Nie masz jeszcze zapisanych zdjęć." />
+        </View>
+      ) : null}
     </View>
   );
 };

@@ -1,11 +1,13 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { isEmpty } from 'lodash';
 
+import { IDocument } from '../../components/DocumentCard/DocumentCard.types';
 import { reduxStatus } from '../../constants';
 import { IImageSliceState } from '../../types/Image';
 import { listSavedImagesThunk, processImageThunk } from '../thunks/imageThunk';
 
 const initialState: IImageSliceState = {
+  selectedDocument: null,
   processedImageBase64: null,
   savedImages: null,
   processImageStatus: null,
@@ -16,7 +18,11 @@ const initialState: IImageSliceState = {
 const imageSlice = createSlice({
   name: 'image',
   initialState,
-  reducers: {},
+  reducers: {
+    setDocument: (state, { payload }: PayloadAction<IDocument>) => {
+      state.selectedDocument = payload;
+    },
+  },
   extraReducers: (builder) => {
     // processImageThunk
     builder.addCase(processImageThunk.pending, (state) => {
@@ -49,5 +55,7 @@ const imageSlice = createSlice({
     });
   },
 });
+
+export const { setDocument } = imageSlice.actions;
 
 export default imageSlice.reducer;

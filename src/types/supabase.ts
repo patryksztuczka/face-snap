@@ -3,28 +3,34 @@ export type Json = string | number | boolean | null | { [key: string]: Json | un
 export interface Database {
   public: {
     Tables: {
-      pictures: {
+      images: {
         Row: {
           created_at: string;
           id: string;
-          image: string;
+          image_name: string;
+          required_height: number;
+          required_width: number;
           user_id: string;
         };
         Insert: {
           created_at?: string;
           id?: string;
-          image: string;
+          image_name: string;
+          required_height: number;
+          required_width: number;
           user_id: string;
         };
         Update: {
           created_at?: string;
           id?: string;
-          image?: string;
+          image_name?: string;
+          required_height?: number;
+          required_width?: number;
           user_id?: string;
         };
         Relationships: [
           {
-            foreignKeyName: 'pictures_user_id_fkey';
+            foreignKeyName: 'images_user_id_fkey';
             columns: ['user_id'];
             referencedRelation: 'users';
             referencedColumns: ['id'];
