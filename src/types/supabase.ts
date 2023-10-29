@@ -5,22 +5,22 @@ export interface Database {
     Tables: {
       pictures: {
         Row: {
-          base64_image: string | null;
           created_at: string;
           id: string;
-          user_id: string | null;
+          image: string;
+          user_id: string;
         };
         Insert: {
-          base64_image?: string | null;
           created_at?: string;
           id?: string;
-          user_id?: string | null;
+          image: string;
+          user_id: string;
         };
         Update: {
-          base64_image?: string | null;
           created_at?: string;
           id?: string;
-          user_id?: string | null;
+          image?: string;
+          user_id?: string;
         };
         Relationships: [
           {
