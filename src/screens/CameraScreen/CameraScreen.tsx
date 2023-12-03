@@ -1,34 +1,37 @@
 import { Camera, CameraCapturedPicture, CameraType, FaceDetectionResult } from 'expo-camera';
-import { FaceDetectorClassifications, FaceDetectorMode, FaceFeature } from 'expo-face-detector';
+import {
+  FaceDetectorClassifications,
+  FaceDetectorLandmarks,
+  FaceDetectorMode,
+} from 'expo-face-detector';
+import { useFonts } from 'expo-font';
 import { useRouter } from 'expo-router';
 import { useRef, useState } from 'react';
-import {
-  View,
-  TouchableOpacity,
-  Text,
-  Image,
-  useWindowDimensions,
-  ActivityIndicator,
-} from 'react-native';
+import { View, TouchableOpacity, Text, useWindowDimensions } from 'react-native';
 
 import { styles } from './CameraScreen.styles';
 import CameraFlipIcon from '../../assets/icons/CameraFlipIcon';
+import CloseIcon from '../../assets/icons/CloseIcon';
+import PortraitShape from '../../assets/icons/PortraitShape';
 import Button from '../../components/Button/Button';
 import CameraError from '../../components/CameraError/CameraError';
+import PhotoPreview from '../../components/PhotoPreview/PhotoPreview';
 import { navigationRoutes, reduxStatus } from '../../constants';
-import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
-import { processImageThunk } from '../../redux/thunks/imageThunk';
+import { useAppSelector } from '../../hooks/useRedux';
+import { IFaceFeature } from '../../types/IFaceFeature';
 
 const CameraScreen = () => {
-  const dispatch = useAppDispatch();
-
   const router = useRouter();
 
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
 
   const cameraWrapperRef = useRef<View>(null);
 
   const cameraRef = useRef<Camera>(null);
+
+  const [fontsLoaded] = useFonts({
+    'DM Sans 700': require('../../assets/fonts/DMSans-Bold.ttf'),
+  });
 
   const [type, setType] = useState(CameraType.back);
 
@@ -36,7 +39,7 @@ const CameraScreen = () => {
 
   const [permission, requestPermission] = Camera.useCameraPermissions();
 
-  const [detectedFace, setDetectedFace] = useState<FaceFeature | null>(null);
+  const [detectedFace, setDetectedFace] = useState<IFaceFeature | null>(null);
 
   const [faceDetectionError, setFaceDetectionError] = useState<string | null>(null);
 
@@ -62,17 +65,8 @@ const CameraScreen = () => {
     setCapturedPicture(null);
   };
 
-  const proccessPicture = async () => {
-    if (!capturedPicture) return;
-
-    if (!capturedPicture.base64) return;
-
-    dispatch(
-      processImageThunk({
-        imageBase64: capturedPicture.base64,
-        callback: () => router.push(navigationRoutes.summary),
-      }),
-    );
+  const backToHomeScreen = () => {
+    router.push(navigationRoutes.home);
   };
 
   const handleFacesDetected = ({ faces }: FaceDetectionResult) => {
@@ -81,7 +75,7 @@ const CameraScreen = () => {
       return;
     }
 
-    const face = faces[0] as FaceFeature;
+    const face = faces[0] as IFaceFeature;
 
     if (face) {
       const {
@@ -126,21 +120,31 @@ const CameraScreen = () => {
 
       if (rollAngle > 4) {
         setFaceDetectionError('Twarz nie może być uniesiona ani opuszczona');
-        return;
+        // return;
       }
 
-      console.log('=====================');
-      console.log('left eye open probability', leftEyeOpenProbability);
-      console.log('right eye open probability', rightEyeOpenProbability);
-      console.log('smiling probability', face.smilingProbability);
-      console.log('yaw angle', face.yawAngle);
-      console.log('roll angle', face.rollAngle);
-      console.log('=====================');
+      // console.log('=====================');
+      // // console.log(faces);
+      // console.log('left eye open probability', leftEyeOpenProbability);
+      // console.log('right eye open probability', rightEyeOpenProbability);
+      // console.log('smiling probability', face.smilingProbability);
+      // console.log('yaw angle', face.yawAngle);
+      // console.log('roll angle', face.rollAngle);
+      // console.log('nose position', face.NOSE_BASE);
+      // console.log('right eye postion', face.RIGHT_EYE);
+      // console.log('left eye postion', face.LEFT_EYE);
+      // console.log('mouth position', face.BOTTOM_MOUTH);
+      // console.log('left ear position', face.LEFT_EAR);
+      // console.log('right ear position', face.RIGHT_EAR);
+      // console.log('gaze probability', countGazeProbability(face));
+      // console.log('=====================');
     } else {
       setDetectedFace(null);
       setFaceDetectionError('Nie wykryto twarzy');
     }
   };
+
+  if (!fontsLoaded) return null;
 
   if (!permission) {
     return (
@@ -170,33 +174,19 @@ const CameraScreen = () => {
   return (
     <View ref={cameraWrapperRef} style={styles.cameraScreenWrapper}>
       {capturedPicture != null && (
-        <View style={styles.capturedPictureWrapper}>
-          {processImageStatus === reduxStatus.pending ? (
-            <View
-              style={{
-                ...styles.processingOverlay,
-                width,
-                height,
-              }}>
-              <ActivityIndicator size="large" color="#aaa" />
-              <Text style={styles.processingOverlayText}>Przetwarzanie zdjęcia...</Text>
-            </View>
-          ) : null}
-          <Image
-            source={{ uri: capturedPicture.uri }}
-            style={{
-              width: width - 40,
-              height:
-                (width - 40) * (selectedDocument.requiredHeight / selectedDocument.requiredWidth),
-            }}
-          />
-          <View style={styles.capturedPictureButtonsContainer}>
-            <Button text="Przejdź dalej" onPress={proccessPicture} />
-            <Button text="Powtórz zdjęcie" onPress={takePictureAgain} secondary />
-          </View>
-        </View>
+        <PhotoPreview
+          capturedPicture={capturedPicture}
+          isProcessing={processImageStatus === reduxStatus.pending}
+          selectedDocument={selectedDocument}
+          takePictureAgain={takePictureAgain}
+        />
       )}
-      <CameraError errorMessage={faceDetectionError} />
+      <View style={styles.header}>
+        <TouchableOpacity style={styles.closeButtonBox} onPress={backToHomeScreen}>
+          <CloseIcon />
+        </TouchableOpacity>
+        <CameraError errorMessage={faceDetectionError} />
+      </View>
       <Camera
         ref={cameraRef}
         type={type}
@@ -209,8 +199,28 @@ const CameraScreen = () => {
           mode: FaceDetectorMode.accurate,
           runClassifications: FaceDetectorClassifications.all,
           minDetectionInterval: 1000,
+          detectLandmarks: FaceDetectorLandmarks.all,
         }}
         onFacesDetected={handleFacesDetected}>
+        <View style={styles.portraitShape}>
+          <PortraitShape />
+        </View>
+        {/* <View
+          style={{
+            ...styles.faceBounds,
+            top: detectedFace?.bounds.origin.y,
+            left: detectedFace?.bounds.origin.x,
+            width: detectedFace?.bounds.size.width,
+            height: detectedFace?.bounds.size.height,
+          }}
+        />
+        <View
+          style={{
+            ...styles.eyePoint,
+            top: detectedFace?.LEFT_EYE?.y,
+            left: detectedFace?.LEFT_EYE?.x,
+          }}
+        /> */}
         {/* <View style={styles.detectedFaceInfoContainer}>
           {detectedFace ? (
             <>

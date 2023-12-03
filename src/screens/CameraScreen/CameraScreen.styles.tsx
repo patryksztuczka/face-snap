@@ -9,7 +9,24 @@ export const styles = StyleSheet.create({
     backgroundColor: '#000',
   },
 
+  header: {
+    position: 'relative',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    marginTop: 16,
+    height: 48,
+  },
+
+  closeButtonBox: {
+    position: 'absolute',
+    top: '50%',
+    left: 24,
+    transform: [{ translateY: -12 }],
+  },
+
   camera: {
+    position: 'relative',
     justifyContent: 'space-between',
   },
 
@@ -32,6 +49,7 @@ export const styles = StyleSheet.create({
     minHeight: 100,
     height: 100,
     paddingBottom: 20,
+    backgroundColor: '#ddd',
   },
 
   goBackButton: {
@@ -69,45 +87,34 @@ export const styles = StyleSheet.create({
     borderColor: '#ddd',
   },
 
-  button: {},
-
   text: {
     fontSize: 18,
   },
 
-  capturedPictureWrapper: {
+  portraitShape: {
     position: 'absolute',
-    top: 0,
+    bottom: 0,
     left: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
+    zIndex: 100,
     width: '100%',
     height: '100%',
-    backgroundColor: '#fff',
-    padding: 20,
-    zIndex: 100,
-  },
-
-  capturedPictureButtonsContainer: {
-    marginTop: 20,
-    width: '100%',
-    gap: 10,
-  },
-
-  processingOverlay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(255,255,255,0.8)',
-    zIndex: 100,
   },
 
-  processingOverlayText: {
-    fontSize: 18,
-    fontWeight: '500',
-    color: '#aaa',
-    marginTop: 10,
+  faceBounds: {
+    position: 'absolute',
+    zIndex: 100,
+    borderWidth: 3,
+    borderColor: '#ddd',
+  },
+
+  eyePoint: {
+    position: 'absolute',
+    zIndex: 100,
+    width: 4,
+    height: 4,
+    borderRadius: 9999,
+    backgroundColor: '#f00',
   },
 });
