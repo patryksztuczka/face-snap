@@ -9,7 +9,7 @@ import NavigationButton from '../NavigationButton/NavigationButton';
 const NavigationBar = () => {
   const pathname = usePathname();
 
-  return pathname !== navigationRoutes.camera ? (
+  return pathname !== navigationRoutes.camera && pathname !== navigationRoutes.summary ? (
     <View style={styles.navigationBarWrapper}>
       {navigationBarOptions.map((option) => (
         <NavigationButton

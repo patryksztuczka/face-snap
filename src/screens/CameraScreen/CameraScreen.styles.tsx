@@ -49,7 +49,6 @@ export const styles = StyleSheet.create({
     minHeight: 100,
     height: 100,
     paddingBottom: 20,
-    backgroundColor: '#ddd',
   },
 
   goBackButton: {

@@ -44,7 +44,8 @@
     "react-redux": "^8.1.3",
     "styled-components": "^5.3.10",
     "uuid": "^9.0.1",
-    "expo-face-detector": "~12.1.1"
+    "expo-face-detector": "~12.1.1",
+    "expo-media-library": "~15.2.3"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

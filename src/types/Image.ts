@@ -6,8 +6,7 @@ export interface ISavedImage {
   userId: string;
   imageName: string;
   imageUrl: string;
-  requiredWidth: number;
-  requiredHeight: number;
+  documentId: number;
   createdAt: string;
 }
 
@@ -33,8 +32,7 @@ export interface IProcessImageThunkResponse {
 export interface ISavePictureThunk {
   userId: string;
   imageBase64: string;
-  requiredWidth: number;
-  requiredHeight: number;
+  documentId: number;
   callback?: () => void;
 }
 

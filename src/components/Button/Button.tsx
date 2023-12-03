@@ -8,7 +8,7 @@ import IconBox from '../IconBox/IconBox';
 
 const Button = ({ text, onPress, secondary, icon, disabled, isLoading }: IButtonProps) => {
   const [fontsLoaded] = useFonts({
-    'DM Sans 500': require('../../assets/fonts/DMSans-Medium.ttf'),
+    'DM Sans 700': require('../../assets/fonts/DMSans-Bold.ttf'),
   });
 
   if (!fontsLoaded) {
@@ -34,7 +34,7 @@ const Button = ({ text, onPress, secondary, icon, disabled, isLoading }: IButton
       <Text
         style={[
           secondary ? styles.textSecondary : disabled ? styles.textDisabled : styles.textPrimary,
-          { fontFamily: 'DM Sans 500' },
+          { fontFamily: 'DM Sans 700' },
         ]}>
         {isLoading ? <ActivityIndicator size="small" color="#fff" /> : text}
       </Text>

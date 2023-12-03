@@ -4,6 +4,10 @@ export const styles = StyleSheet.create({
   documentCardWrapper: {
     width: 314,
     height: 460,
+    borderRadius: 30,
+    backgroundColor: 'transparent',
+    elevation: 10,
+    shadowColor: 'rgba(14,13,13,0.95)',
   },
 
   backgroundImage: {
@@ -11,7 +15,17 @@ export const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
     resizeMode: 'cover',
+    borderRadius: 20,
     padding: 20,
+  },
+
+  emblemWrapper: {
+    width: 24,
+    height: 24,
+    borderRadius: 9999,
+    backgroundColor: 'white',
+    elevation: 10,
+    shadowColor: 'rgba(14,13,13,1)',
   },
 
   emblemImage: {

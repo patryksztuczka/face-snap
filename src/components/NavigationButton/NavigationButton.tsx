@@ -32,8 +32,7 @@ const NavigationButton: FC<INavigationButtonProps> = ({ navigationOption, isActi
                   ...styles.navigationButtonLabel,
                   fontFamily: 'DM Sans 400',
                 }
-          }
-        >
+          }>
           {label}
         </Text>
       </View>

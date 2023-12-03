@@ -49,16 +49,16 @@ export const navigationBarOptions: INavigationOption[] = [
   },
 ];
 
-export const polishId: IDocument = {
-  id: 1,
-  title: 'Dowód osobisty',
-  subtitle: 'Wykonaj zdjęcie do polskiego dowodu osobistego.',
-  // in milimeters
-  requiredWidth: 35,
-  requiredHeight: 45,
-  // in megabytes
-  maxFileSize: 2.5,
-};
+export const documents: IDocument[] = [
+  {
+    id: 1,
+    title: 'Paszport',
+    subtitle: 'Wykonaj zdjęcie do polskiego paszportu.',
+    requiredWidth: 35,
+    requiredHeight: 45,
+    maxFileSize: 2.5,
+  },
+];
 
 export const reduxStatus: IReduxStatus = {
   pending: 'pending',

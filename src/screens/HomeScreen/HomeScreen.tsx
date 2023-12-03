@@ -1,17 +1,15 @@
 import * as ImagePicker from 'expo-image-picker';
 import { useRouter } from 'expo-router';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { View } from 'react-native';
 
 import { styles } from './HomeScreen.styles';
 import DocumentCard from '../../components/DocumentCard/DocumentCard';
 import PrimaryHeader from '../../components/PrimaryHeader/PrimaryHeader';
 import PrimaryParagraph from '../../components/PrimaryParagraph/PrimaryParagraph';
-import { navigationRoutes, polishId } from '../../constants';
-// import { useAuth } from '../../context/AuthContext/AuthContext';
+import { navigationRoutes, documents } from '../../constants';
 import { useAppDispatch } from '../../hooks/useRedux';
-import { getHelloWorldThunk, processImageThunk } from '../../redux/thunks/imageThunk';
-// import { supabase } from '../../supabaseClient';
+import { processImageThunk } from '../../redux/thunks/imageThunk';
 
 const HomeScreen = () => {
   // const { auth } = supabase;
@@ -62,12 +60,14 @@ const HomeScreen = () => {
         <PrimaryParagraph text="Wybierz dokument, do którego chcesz wykonać zdjęcie." />
       </View>
       <View style={styles.documentCardsContainer}>
-        <DocumentCard
-          key={polishId.id}
-          document={polishId}
-          pickImage={pickImage}
-          goToCamera={goToCamera}
-        />
+        {documents.map((document) => (
+          <DocumentCard
+            key={document.id}
+            document={document}
+            pickImage={pickImage}
+            goToCamera={goToCamera}
+          />
+        ))}
       </View>
       {/* <Text>Hello, {session?.session?.user.email}</Text> */}
       {/* <Button title="Log out" onPress={handleLogout} /> */}

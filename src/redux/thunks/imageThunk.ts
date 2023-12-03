@@ -50,7 +50,7 @@ export const processImageThunk = createAsyncThunk(
 
 export const savePictureThunk = createAsyncThunk(
   'image/savePicture',
-  async ({ userId, imageBase64, requiredHeight, requiredWidth, callback }: ISavePictureThunk) => {
+  async ({ userId, imageBase64, documentId, callback }: ISavePictureThunk) => {
     try {
       console.log('callback', callback);
       const fileName = `${uuidv4()}.jpg`;
@@ -60,8 +60,7 @@ export const savePictureThunk = createAsyncThunk(
         .insert({
           image_name: fileName,
           user_id: userId,
-          required_height: requiredHeight,
-          required_width: requiredWidth,
+          document_id: documentId,
         })
         .select();
 
@@ -106,8 +105,7 @@ export const listSavedImagesThunk = createAsyncThunk(
             userId: picture.user_id,
             imageName: picture.image_name,
             imageUrl: storageData.publicUrl,
-            requiredHeight: picture.required_height,
-            requiredWidth: picture.required_width,
+            documentId: picture.document_id,
             createdAt: picture.created_at,
           } as ISavedImage;
         }),

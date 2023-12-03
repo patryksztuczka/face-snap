@@ -10,9 +10,13 @@ export const styles = StyleSheet.create({
   },
 
   historyList: {
-    gap: 16,
+    flex: 2,
+    width: '100%',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 20,
     justifyContent: 'center',
-    alignItems: 'center',
+    borderRadius: 16,
   },
 
   loadingContainer: {
