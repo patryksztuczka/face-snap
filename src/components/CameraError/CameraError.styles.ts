@@ -3,16 +3,20 @@ import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
   cameraErrorWrapper: {
     flexDirection: 'row',
-    gap: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    minHeight: 50,
-    height: 50,
-    paddingTop: 15,
   },
 
   errorMessage: {
     color: '#E54335',
+    fontSize: 16,
+    fontWeight: 'bold',
+    maxWidth: 250,
+    textAlign: 'center',
+  },
+
+  successMessage: {
+    color: '#0E9F6E',
     fontSize: 16,
     fontWeight: 'bold',
   },
